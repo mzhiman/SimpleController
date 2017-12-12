@@ -10,6 +10,7 @@ import org.dom4j.io.SAXReader;
 
 public class XmlParser {
 	private static final String CTRL_NODE_NAME = "controller";
+	private static final String INTERCEPTOR_NODE_TYPE = "interceptor";
 	private static final String ACTION_NODE_NAME = "action";
 	private static final String RESULT_NODE_NAME = "result";
 	private static final String ATTR_NAME = "name";
@@ -23,48 +24,14 @@ public class XmlParser {
 	}
 	
 	
-	/** *******放弃不用,已重写*******
-	  * matchAction TODO :基于DOM4j解析XML文件,匹配指定的actionName
-	  * @param actionName xml文档中action name = "actionName"
-	  * @return actionName所在节点
-	  * @throws DocumentException
-	  * @author zhiman
-	  * @date 2017/12/03 上午11:45:24 
-	  */
-//	private Element matchAction(String actionName, int i) throws DocumentException{
-//		Element rightElement = null;
-//		//得到Document对象
-//		Document document = getDocument(XmlFilePath);
-//		//获取XML根节点
-//		Element root = document.getRootElement();
-//		//得到controller节点
-//		Element elementCtrl = root.element(CTRL_NODE_NAME);
-//		//获取controller节点下action结点列表
-//		List<Element> elementActionList = getElementNodeList(elementCtrl,ACTION_NODE_NAME);
-//		//判断controller节点下是否有action结点
-//		if (elementActionList.size() == 0) {
-//			throw new RuntimeException("controller节点下面没有action节点");
-//		}
-//		//遍历匹配寻找对应的action
-//		for (Element elementAction : elementActionList) {
-//			//去掉传入的actionName前后空格
-//			String actionNameNoSpace = actionName.trim();
-//			//得到name属性对应的值
-//			String actAttrValue = getAttributeValue(elementAction,ATTR_NAME);
-//			//匹配
-//			if ( NONE_STR.equals( actionNameNoSpace ) ) {
-//				throw new RuntimeException("actionName不能为全空格");
-//			} else if ( actionNameNoSpace.equals( actAttrValue ) ) {
-//				rightElement = elementAction;
-//				break;
-//			}
-//		}
-//		//判断是否匹配成功
-//		if ( rightElement == null) {
-//			throw new RuntimeException(actionName+"不能匹配，请检查："+XmlFilePath);
-//		}
-//		return rightElement;
-//	}
+
+	public Element matchInterceptor (String interceptorName) throws DocumentException {
+		//得到Document对象
+		Document document = getDocument(XmlFilePath);
+		//获取XML根节点
+		Element root = document.getRootElement();
+		return matchElement(INTERCEPTOR_NODE_TYPE ,interceptorName, root);
+	}
 	
 	/** 
 	  * matchAction TODO :基于DOM4j解析XML文件,匹配指定的actionName
@@ -156,10 +123,10 @@ public class XmlParser {
 	  * @author zhiman
 	  * @date 2017/12/03 上午9:58:45 
 	  */
-	public String getAttributeValue( Element element , String attrName) {
+	public static String getAttributeValue( Element element , String attrName) {
 		Attribute attribute = element.attribute(attrName.trim());
 		if(attribute == null) {
-			throw new RuntimeException("元素节点"+element.getName()+"中找不到名为:"+attrName+"的属性，请检查："+XmlFilePath);
+			throw new RuntimeException("元素节点"+element.getName()+"中找不到");
 		}
 		return attribute.getValue().trim();
 	}
@@ -172,7 +139,7 @@ public class XmlParser {
 	  * @author zhiman
 	  * @date 2017/12/03 下午12:40:56 
 	  */
-	public String getNodeContent( Element element ) {
+	public static String getNodeContent( Element element ) {
 		return element.getTextTrim();
 	}
 	
