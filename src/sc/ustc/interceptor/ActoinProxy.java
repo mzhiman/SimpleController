@@ -34,6 +34,7 @@ public class ActoinProxy implements InvocationHandler {
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		preAction();
+		//这里传入了要代理的对象作为invoke方法的参数
 		Object result = method.invoke(object, args);
 		afterAction();
 		return result;

@@ -1,12 +1,11 @@
 package sc.ustc.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
 //import java.lang.reflect.Field;
 //import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import sc.ustc.interceptor.ActionsExecutor;
 import sc.ustc.interceptor.ActoinProxy;
 import sc.ustc.interceptor.Executor;
+import sc.ustc.util.Xml2Html;
 //import sc.ustc.util.ClassReflector;
 import sc.ustc.util.XmlParser;
 
@@ -39,7 +39,6 @@ public class SimpleController extends HttpServlet {
 		String xmlPath = SimpleController.class.getClassLoader().getResource(XML_FILE_NAME).getPath();
 		parser = new XmlParser(xmlPath);
 		String actionName = getActionName(request);
-		
 		System.out.println(actionName);
 		//这一步应该被代理
 //		String resultName = loadActionClassAndRunMethod(actionName);
@@ -48,7 +47,31 @@ public class SimpleController extends HttpServlet {
 		//Test start****
 		String result = ProxyImplAssistant(actionName);
 		//Test end*******
-		response.sendRedirect(result);
+		System.out.println("****************************"+result);
+		//判断result是否以"_view.xml"结尾，若是，则转成Html
+		String html = translateResult(result);
+		if ( html != null) {
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().write(html);
+		} else {
+			response.sendRedirect(result);
+		}
+	}
+	private String translateResult(String result) {
+		String rear = "_view.xml";
+		result = result.trim();
+		if ( result.endsWith( rear ) ) {
+			//获得result对应的文件路径
+			String path = SimpleController.class.getClassLoader().getResource("../../").getPath();
+			String xslFilePath = path + result;
+			//创建特殊后缀Html文件
+			System.out.println(xslFilePath+"****************************"+path);
+			File file = new File(xslFilePath);
+			return Xml2Html.translateXml2Html(file);
+		} else {
+			return null;
+		}
+		
 	}
 	/** 
 	  * ProxyImplAssistant TODO :
@@ -77,13 +100,13 @@ public class SimpleController extends HttpServlet {
 	private String getActionName(HttpServletRequest request) {
 		String urlString=request.getRequestURI();
 		//测试getParameterMap() start
-		Map<String, String[]> map = request.getParameterMap();
-		if (map.size() != 0) {
-			Set<Entry<String, String[]>> entrySet = map.entrySet();
-			for(Entry<String, String[]> entry : entrySet){
-				System.out.println(entry.getKey()+"***"+entry.getValue()[0]);
-			}
-		}
+//		Map<String, String[]> map = request.getParameterMap();
+//		if (map.size() != 0) {
+//			Set<Entry<String, String[]>> entrySet = map.entrySet();
+//			for(Entry<String, String[]> entry : entrySet){
+//				System.out.println(entry.getKey()+"***"+entry.getValue()[0]);
+//			}
+//		}
 		//测试getParameterMap() end
 		return urlString.substring(urlString.lastIndexOf("/")+1,urlString.indexOf(".sc"));
 	}
