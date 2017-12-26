@@ -16,10 +16,10 @@ public class ActionsExecutor implements Executor{
 		this.actionName = actionName;
 		this.parser = parser;
 	}
-	
-	public String executeAction() {
+	//----------executeAction方法增加可变参数 
+	public String executeAction(Object...args) {
 		//这一步应该被代理
-		String resultName = loadActionClassAndRunMethod(actionName);
+		String resultName = loadActionClassAndRunMethod(actionName,args);
 		//处理执行结果，这一步也应该被代理
 		String result = handleResult(actionName,resultName);
 		//*****测试动态代理*****
@@ -34,7 +34,7 @@ public class ActionsExecutor implements Executor{
 	  * @author zhiman
 	  * @date 2017/12/05 下午10:19:29 
 	  */
-	private String loadActionClassAndRunMethod (String actionName) {
+	private String loadActionClassAndRunMethod (String actionName,Object...args) {
 		Element element = null;
 		String result = null;
 		try {
@@ -52,7 +52,7 @@ public class ActionsExecutor implements Executor{
 		System.out.println(methodName);
 		//利用Java反射加载该类并执行对应的方法
 		try {
-			result = ClassReflector.executeMethod(className, methodName);
+			result = (String) ClassReflector.runMethods(className, methodName,args);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("找不到类："+className);

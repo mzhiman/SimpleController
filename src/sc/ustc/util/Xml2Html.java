@@ -1,7 +1,6 @@
 package sc.ustc.util;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -15,19 +14,19 @@ import org.dom4j.io.DocumentSource;
 import org.dom4j.io.HTMLWriter;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
 
 import sc.ustc.controller.SimpleController;
 
 public class Xml2Html {
 	/** 
 	  * translateXml2Html TODO :
-	  * @param file
-	  * @return
+	  * @param file xml文件对象
+	  * @return HTML字符串语句
 	  * @author zhiman
 	  * @date 2017/12/19 下午8:02:34 
 	  */
 	public static String translateXml2Html(File file) {
+		//得到xsl文件路径
 		String path = SimpleController.class.getClassLoader().getResource("../../").getPath() + "Pages/translator.xsl";
 		File xslFile = new File(path);
 		Document document = null;
@@ -46,54 +45,23 @@ public class Xml2Html {
 		
 	}
 
-	/** 
-	  * writeXml TODO :
-	  * @param document
-	  * @param file
-	  * @author zhiman
-	  * @date 2017/12/19 下午8:02:29 
-	  */
-	public static void writeXml(Document document, File file) {
-		OutputFormat format = OutputFormat.createPrettyPrint();// 格式
-		format.setEncoding(document.getXMLEncoding());
-		// 解决声明下空行问题
-		format.setNewLineAfterDeclaration(false);
-		// 4.设置编码格式
-		// format.setEncoding("utf-8");
-		XMLWriter xmlWriter = null;
-		try {
-			xmlWriter = new XMLWriter(new FileOutputStream(file), format);
-			xmlWriter.write(document);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (xmlWriter != null) {
-				try {
-					xmlWriter.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-
-		}
-	}
 	 /** 
-	  * writeHtml TODO :将HTML document转换成 字符串
-	  * @param transformDoc
-	  * @return
+	  * writeHtml TODO :将HTML document转换成字符串
+	  * @param doc 
+	  * @return HTML字符串语句
 	  * @author zhiman
-	  * @date 2017/12/19 下午8:02:16 
+	  * @date 2017/12/19 下午9:02:16 
 	  */
-	private static String writeHtml(Document transformDoc){
+	public static String writeHtml(Document doc){
 		 	//将HTML写成字符串流
 	        StringWriter strWriter = new StringWriter();
 	        OutputFormat format = OutputFormat.createPrettyPrint();
-	        format.setEncoding(transformDoc.getXMLEncoding());
+	        format.setEncoding(doc.getXMLEncoding());
 	        format.setXHTML(true);
 	        HTMLWriter htmlWriter = new HTMLWriter(strWriter,format);
 	        format.setExpandEmptyElements(false);
 	        try {
-	            htmlWriter.write(transformDoc);
+	            htmlWriter.write(doc);
 	            htmlWriter.flush();
 	        } catch (IOException e) {
 	        }
@@ -101,9 +69,9 @@ public class Xml2Html {
 	    }
 	/** 
 	  * styleDocument TODO :将document按照xsl格式转换成HTML document
-	  * @param document
-	  * @param file
-	  * @return
+	  * @param document xml文档
+	  * @param file xsl文件
+	  * @return 转换后的html文档
 	  * @throws Exception
 	  * @author zhiman
 	  * @date 2017/12/19 下午8:02:22 

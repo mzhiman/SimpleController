@@ -1,8 +1,10 @@
 package sc.ustc.util;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class ClassReflector {
 	/** 
@@ -73,21 +75,52 @@ public class ClassReflector {
 	  */
 	public static String executeMethod(String className,String methodName) throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		Class<?> cls = gainClass(className);
-//		//测试*************start
-//		Field[] field = cls.getDeclaredFields();
-//		for (Field f : field) {
-//			System.out.println( f.getName() +"**********"+ f.getType().getName() );
-//		}
-//		//测试*************end
-		
 		return executeMethod(cls,methodName);
 	}
 	
-	public static Field[] matchFields (String className) throws ClassNotFoundException {
+//	public static Field[] matchFields (String className) throws ClassNotFoundException {
+//		Class<?> cls = gainClass(className);
+//		return cls.getDeclaredFields();
+//	}
+//	public static Field[] matchFields (Class<?> cls) {
+//		return cls.getDeclaredFields();
+//	}
+//	/** 
+//	  * executeMethodWithPara TODO :利用反射执行带参数的方法
+//	  * @param cls
+//	  * @param method
+//	  * @param obj
+//	  * @return
+//	  * @author zhiman
+//	  * @throws InstantiationException 
+//	  * @throws InvocationTargetException 
+//	  * @throws IllegalArgumentException 
+//	  * @throws IllegalAccessException 
+//	  * @date 2017/12/23 下午5:50:04 
+//	  */
+//	public static Object executeMethodWithPara( 
+//			Class<?> cls,Method method,Object...obj)
+//					throws IllegalAccessException,
+//					IllegalArgumentException, 
+//					InvocationTargetException, 
+//					InstantiationException{
+//		
+//		return method.invoke(cls.newInstance(),obj);
+//	}
+	
+/*-----------------------------重写runMethods方法------------------------------------*/	
+	public static Object runMethods(Class<?> cls, Method method,Object...args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
+		return method.invoke(cls.newInstance(),args);
+	}
+	public static Object runMethods(Class<?> cls,String methodName,Object...args) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
+		//*********************
+		Method method = cls.getMethod(methodName,HttpServletRequest.class,HttpServletResponse.class);
+		return runMethods(cls, method,args);
+	}
+	public static Object runMethods(String className,String methodName,Object...args) throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		Class<?> cls = gainClass(className);
-		return cls.getDeclaredFields();
+		return runMethods(cls,methodName,args);
 	}
-	public static Field[] matchFields (Class<?> cls) {
-		return cls.getDeclaredFields();
-	}
+	
+	
 }

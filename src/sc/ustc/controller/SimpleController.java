@@ -45,7 +45,7 @@ public class SimpleController extends HttpServlet {
 //		//处理执行结果，这一步也应该被代理
 //		String result = handleResult(actionName,resultName);
 		//Test start****
-		String result = ProxyImplAssistant(actionName);
+		String result = ProxyImplAssistant(actionName,request,response);
 		//Test end*******
 		System.out.println("****************************"+result);
 		//判断result是否以"_view.xml"结尾，若是，则转成Html
@@ -80,13 +80,16 @@ public class SimpleController extends HttpServlet {
 	  * @author zhiman
 	  * @date 2017/12/12 上午11:11:51 
 	  */
-	private String ProxyImplAssistant (String actionName) {
+	private String ProxyImplAssistant (String actionName,Object...args) {
 		Executor executor = new ActionsExecutor(parser, actionName);
 		ActoinProxy h = new ActoinProxy(executor, parser, actionName);
 		Class<?> cls = executor.getClass();
-		Executor proxy = (Executor) Proxy.newProxyInstance(cls.getClassLoader(), 
-				cls.getInterfaces(), h);
-		String result = proxy.executeAction();
+		Executor proxy = (Executor) Proxy.newProxyInstance(
+				cls.getClassLoader(), 
+				cls.getInterfaces(), 
+				h );
+		String result = proxy.executeAction(args);
+		
 		return result;
 	}
 	

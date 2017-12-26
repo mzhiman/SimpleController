@@ -7,5 +7,5 @@ public interface Executor {
 	  * @author zhiman
 	  * @date 2017/12/12 ионГ9:48:09 
 	  */
-	public String executeAction();
+	public String executeAction(Object...args);
 }

@@ -15,7 +15,7 @@ public class ActoinProxy implements InvocationHandler {
 	private String className;
 	private Element element;
 
-	public ActoinProxy(Object object, XmlParser parser, String actionName) {
+	public ActoinProxy(Object object, XmlParser parser, String actionName ) {
 		this.actionName = actionName;
 		this.parser = parser;
 		this.object = object;
@@ -59,7 +59,7 @@ public class ActoinProxy implements InvocationHandler {
 			String afterDoMethod = XmlParser.getAttributeValue(element, "afterdo");
 			try {
 				//≤‚ ‘ start
-				Thread.sleep(1000);
+				//Thread.sleep(1000);
 				//≤‚ ‘ end
 				ClassReflector.executeMethod(className, afterDoMethod);
 			} catch (Exception e) {
