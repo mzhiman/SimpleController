@@ -86,7 +86,7 @@ public class XmlParser {
 	  * @date 2017/12/05 下午5:21:10 
 	  */
 	public Element matchElement (String elementType, String elementName, Element parentElement ) {
-		Element matchedElement = null;
+/*		Element matchedElement = null;
 		//获取parentElement节点下所以直接结点列表
 		List<Element> elementList = getElementNodeList(parentElement,elementType);
 		//判断parentElement节点下是否有节点
@@ -110,10 +110,48 @@ public class XmlParser {
 		//遍历完整个elementList,没有找到匹配elementName的element
 		if (matchedElement == null) {
 			throw new RuntimeException( elementName + "不能匹配到合适的" + elementType );
+		}*/
+		return matchElement(elementType,ATTR_NAME,elementName,parentElement);
+	}
+	
+	/** 
+	  * matchElement TODO :重载方法
+	  * @param elementType
+	  * @param attrType
+	  * @param elementName
+	  * @param parentElement
+	  * @return
+	  * @author zhiman
+	  * @date 2017/12/27 下午10:26:06 
+	  */
+	public static Element matchElement (String elementType,String attrType, String attrName, Element parentElement ) {
+		Element matchedElement = null;
+		//获取parentElement节点下所以直接结点列表
+		List<Element> elementList = getElementNodeList(parentElement,elementType);
+		//判断parentElement节点下是否有节点
+		if ( elementList.size() == 0 ) {
+			throw new RuntimeException(parentElement.getName()+"节点下面没有节点");
+		}
+		//遍历整个elementList
+		for (Element element : elementList) {
+			//去掉传入的elementName前后空格
+			attrName = attrName.trim();
+			//得到name属性对应的值
+			String attrValue = getAttributeValue(element,attrType);
+			//匹配
+			if ( NONE_STR.equals( attrName ) ) {
+				throw new RuntimeException("attrName不能为全空格");
+			} else if ( attrName.equals( attrValue ) ) {
+				matchedElement = element;
+				break;
+			}
+		}
+		//遍历完整个elementList,没有找到匹配elementName的element
+		if (matchedElement == null) {
+			throw new RuntimeException( attrName + "不能匹配到合适的" + elementType );
 		}
 		return matchedElement;
 	}
-	
 	
 	/** 
 	  * getAttributeValue TODO :根据属性名，得到对应的属性值，如《action name = “actionName” type = "actionType"》《/action》
@@ -153,7 +191,7 @@ public class XmlParser {
 	  * @date 2017/12/03 上午12:57:26 
 	  */
 	@SuppressWarnings("unchecked")
-	private List<Element> getElementNodeList(Element root, String elementType) {
+	private static List<Element> getElementNodeList(Element root, String elementType) {
 		return  root.elements(elementType);
 	}
 

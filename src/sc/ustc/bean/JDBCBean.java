@@ -1,7 +1,7 @@
 package sc.ustc.bean;
 
 /** 
-  * @description JDBCBean.java ‘› ±Œ¥ π”√
+  * @description JDBCBean.java
   * @author Administrator
   * @date 2017/12/26
   * @version

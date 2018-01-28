@@ -106,7 +106,7 @@ public class ClassReflector {
 //					InstantiationException{
 //		
 //		return method.invoke(cls.newInstance(),obj);
-//	}
+//	} 
 	
 /*-----------------------------重写runMethods方法------------------------------------*/	
 	public static Object runMethods(Class<?> cls, Method method,Object...args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
@@ -121,6 +121,7 @@ public class ClassReflector {
 		Class<?> cls = gainClass(className);
 		return runMethods(cls,methodName,args);
 	}
+	//为了作业7重写该方法
 	
 	
 }
