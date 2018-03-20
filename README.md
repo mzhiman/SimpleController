@@ -22,4 +22,4 @@
 
 5、可以根据已有的xsl规则编写xml视图（可选）
 
-**详细使用方法参考：SCDemo：**
+**详细使用方法参考：SCDemo：https://github.com/SmartManMa/SCDemo**
