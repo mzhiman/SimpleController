@@ -78,42 +78,11 @@ public class ClassReflector {
 		return executeMethod(cls,methodName);
 	}
 	
-//	public static Field[] matchFields (String className) throws ClassNotFoundException {
-//		Class<?> cls = gainClass(className);
-//		return cls.getDeclaredFields();
-//	}
-//	public static Field[] matchFields (Class<?> cls) {
-//		return cls.getDeclaredFields();
-//	}
-//	/** 
-//	  * executeMethodWithPara TODO :利用反射执行带参数的方法
-//	  * @param cls
-//	  * @param method
-//	  * @param obj
-//	  * @return
-//	  * @author zhiman
-//	  * @throws InstantiationException 
-//	  * @throws InvocationTargetException 
-//	  * @throws IllegalArgumentException 
-//	  * @throws IllegalAccessException 
-//	  * @date 2017/12/23 下午5:50:04 
-//	  */
-//	public static Object executeMethodWithPara( 
-//			Class<?> cls,Method method,Object...obj)
-//					throws IllegalAccessException,
-//					IllegalArgumentException, 
-//					InvocationTargetException, 
-//					InstantiationException{
-//		
-//		return method.invoke(cls.newInstance(),obj);
-//	} 
-	
 /*-----------------------------重写runMethods方法------------------------------------*/	
 	public static Object runMethods(Class<?> cls, Method method,Object...args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		return method.invoke(cls.newInstance(),args);
 	}
 	public static Object runMethods(Class<?> cls,String methodName,Object...args) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
-		//*********************
 		Method method = cls.getMethod(methodName,HttpServletRequest.class,HttpServletResponse.class);
 		return runMethods(cls, method,args);
 	}
@@ -121,7 +90,4 @@ public class ClassReflector {
 		Class<?> cls = gainClass(className);
 		return runMethods(cls,methodName,args);
 	}
-	//为了作业7重写该方法
-	
-	
 }

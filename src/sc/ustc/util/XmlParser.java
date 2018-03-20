@@ -15,15 +15,11 @@ public class XmlParser {
 	private static final String RESULT_NODE_NAME = "result";
 	private static final String ATTR_NAME = "name";
 	private static final String NONE_STR = "";
-	
     private String XmlFilePath;
- 
     
 	public XmlParser(String XmlFilePath) {
 		this.XmlFilePath = XmlFilePath;
 	}
-	
-	
 
 	public Element matchInterceptor (String interceptorName) throws DocumentException {
 		//得到Document对象
@@ -86,31 +82,6 @@ public class XmlParser {
 	  * @date 2017/12/05 下午5:21:10 
 	  */
 	public Element matchElement (String elementType, String elementName, Element parentElement ) {
-/*		Element matchedElement = null;
-		//获取parentElement节点下所以直接结点列表
-		List<Element> elementList = getElementNodeList(parentElement,elementType);
-		//判断parentElement节点下是否有节点
-		if ( elementList.size() == 0 ) {
-			throw new RuntimeException(parentElement.getName()+"节点下面没有节点");
-		}
-		//遍历整个elementList
-		for (Element element : elementList) {
-			//去掉传入的elementName前后空格
-			elementName = elementName.trim();
-			//得到name属性对应的值
-			String attrValue = getAttributeValue(element,ATTR_NAME);
-			//匹配
-			if ( NONE_STR.equals( elementName ) ) {
-				throw new RuntimeException("elementName不能为全空格");
-			} else if ( elementName.equals( attrValue ) ) {
-				matchedElement = element;
-				break;
-			}
-		}
-		//遍历完整个elementList,没有找到匹配elementName的element
-		if (matchedElement == null) {
-			throw new RuntimeException( elementName + "不能匹配到合适的" + elementType );
-		}*/
 		return matchElement(elementType,ATTR_NAME,elementName,parentElement);
 	}
 	
@@ -169,7 +140,6 @@ public class XmlParser {
 		return attribute.getValue().trim();
 	}
 	
-	
 	/** 
 	  * getNodeContent TODO :返回《action》text《/action》中的text
 	  * @param element 《action》节点
@@ -180,7 +150,6 @@ public class XmlParser {
 	public static String getNodeContent( Element element ) {
 		return element.getTextTrim();
 	}
-	
 
 	/** 
 	  * getElementNodeList TODO : 获取nodeName指定类型的list 如《outter》《inner》 ...《/inner》《inner》 ...《/inner》...《/outter》
@@ -195,7 +164,6 @@ public class XmlParser {
 		return  root.elements(elementType);
 	}
 
-	
 	/** 
 	  * getDocument TODO :得到Document对象
 	  * @param url XML文件路径
@@ -209,6 +177,4 @@ public class XmlParser {
 	     Document document = reader.read(url);
 	     return document;
 	}
-	
-	
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import sc.ustc.bean.ClassBean;
 import sc.ustc.bean.PropertyBean;
 
@@ -42,15 +41,11 @@ public class Conversion {
 		//从映射关系中得到使用的表
 		String table = clsBean.getTableName();
 		System.out.println(table);
-		//String idName = clsBean.getIdName();
-		//System.out.println(idName);
 		//传入的对象所有的成员变量名都在filedList中
 		List<PropertyBean> propertyList = clsBean.getPropertyList();
 		//存储对应的成员变量及其值
 		Map<String,String> map = new HashMap<String, String>();
 		String columnName = null;
-		//调用传入对象成员变量对应的get方法
-		
 		for (PropertyBean property : propertyList) {
 			//得到fieldName对应的get方法
 			String fieldName =  property.getFiledName();
@@ -68,7 +63,6 @@ public class Conversion {
 				if ( type instanceof String) {
 					//类型转换,得到fieldName成员变量的值
 					result = (String) method.invoke(obj);
-					System.out.println("执行");
 					//如果变量没有被初始化
 					if ( result == null ) {
 						continue;
@@ -81,11 +75,9 @@ public class Conversion {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
 		}
 		String querySql = null;
 		if (map.size() != 0) {
-			System.out.println("???执行了吗？");
 			Set< Entry< String,String> > ss = map.entrySet();
 			for (Entry< String,String> entry : ss) {
 				StringBuilder sb = new StringBuilder("select * from ");

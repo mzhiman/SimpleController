@@ -1,6 +1,6 @@
 package sc.ustc.bean;
 
-/** 
+/** 存储解析用户数据库配置文件得到的数据库配置信息
   * @description JDBCBean.java
   * @author Administrator
   * @date 2017/12/26

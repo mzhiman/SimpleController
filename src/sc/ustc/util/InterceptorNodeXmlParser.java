@@ -8,19 +8,20 @@ public class InterceptorNodeXmlParser {
 	private XmlParser parser;
 	private String actionName;
 	private Element InterceptorRefElement;
-	
+
 	public InterceptorNodeXmlParser(XmlParser parser, String actionName) {
 		this.actionName = actionName;
 		this.parser = parser;
 	}
-	
-	/** 
-	  * getInterceptorRefElement TODO :
-	  * @param interceptorRefName
-	  * @return
-	  * @author zhiman
-	  * @date 2017/12/11 下午11:55:03 
-	  */
+
+	/**
+	 * getInterceptorRefElement TODO :
+	 * 
+	 * @param interceptorRefName
+	 * @return
+	 * @author zhiman
+	 * @date 2017/12/11 下午11:55:03
+	 */
 	public Element getInterceptorRefElement(String interceptorRefName) {
 		try {
 			Element parentElement = parser.matchAction(actionName);
@@ -31,14 +32,14 @@ public class InterceptorNodeXmlParser {
 		return InterceptorRefElement;
 	}
 
-
-	/** 
-	  * getInterceptorElement TODO : 返回Interceptor Element
-	  * @param interceptorRefName 
-	  * @return 返回Interceptor Element
-	  * @author zhiman
-	  * @date 2017/12/11 下午11:48:56 
-	  */
+	/**
+	 * getInterceptorElement TODO : 返回Interceptor Element
+	 * 
+	 * @param interceptorRefName
+	 * @return 返回Interceptor Element
+	 * @author zhiman
+	 * @date 2017/12/11 下午11:48:56
+	 */
 	public Element getInterceptorElement(String interceptorRefName) {
 		Element interceptorElement = null;
 		if (hasInterceptorRefElement(interceptorRefName)) {
@@ -62,16 +63,15 @@ public class InterceptorNodeXmlParser {
 	 */
 	public boolean hasInterceptorRefElement(String interceptorRefName) {
 
-		
-		if ( getInterceptorRefElement(interceptorRefName) == null ) {
+		if (getInterceptorRefElement(interceptorRefName) == null) {
 			return false;
 		}
 		return true;
 	}
 
-	public boolean hasInterceptorElement( String interceptorRefName ) {
+	public boolean hasInterceptorElement(String interceptorRefName) {
 
-		if ( getInterceptorElement( interceptorRefName ) == null ) {
+		if (getInterceptorElement(interceptorRefName) == null) {
 			return false;
 		}
 		return true;

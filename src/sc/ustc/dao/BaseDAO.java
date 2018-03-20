@@ -11,6 +11,12 @@ import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
+/** 简化使用此框架用户的数据持久化工作
+  * @description BaseDAO.java
+  * @author Administrator
+  * @date 2018/03/20
+  * @version
+  */
 public  class BaseDAO {
 
 	protected String deriver;
@@ -105,7 +111,6 @@ public  class BaseDAO {
 
 	/**
 	 * openDBConnection TODO :***从配置文件读取数库信息连接数据库
-	 * 
 	 * @param configMap
 	 * @return
 	 * @throws ClassNotFoundException
@@ -130,9 +135,7 @@ public  class BaseDAO {
 
 	/**
 	 * closeDBConnection TODO :关闭数据库连接
-	 * 
-	 * @param connection
-	 *            connection连接
+	 * @param connection connection连接
 	 * @return boolean true or false
 	 * @throws SQLException
 	 * @author zhiman
@@ -144,5 +147,4 @@ public  class BaseDAO {
 		}
 		return connection.isClosed();
 	}
-
 }

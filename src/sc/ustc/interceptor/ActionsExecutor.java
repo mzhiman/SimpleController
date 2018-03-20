@@ -44,7 +44,6 @@ public class ActionsExecutor implements Executor {
 
 	/**
 	 * loadActionClass TODO :加载actionName对应的Action类,并执行对应的方法
-	 * 
 	 * @param actionName
 	 * @return
 	 * @author zhiman
@@ -55,7 +54,6 @@ public class ActionsExecutor implements Executor {
 		String result = null;
 		try {
 			element = parser.matchAction(actionName);
-
 		} catch (DocumentException e) {
 			e.printStackTrace();
 			throw new RuntimeException("loadActionClass出错");
@@ -85,7 +83,6 @@ public class ActionsExecutor implements Executor {
 				String refBeanName = XmlParser.getAttributeValue(refBeanElement, "class");
 				//得到UserBean类对象
 				beancls = ClassReflector.gainClass(refBeanName);
-				//getProperty(cls,fieldName);
 			} catch (DocumentException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
@@ -94,7 +91,6 @@ public class ActionsExecutor implements Executor {
 		}
 
 		// 增加e7 DI end
-
 		String className = XmlParser.getAttributeValue(element, "class");
 		String methodName = XmlParser.getAttributeValue(element, "method");
 		System.out.println(methodName);

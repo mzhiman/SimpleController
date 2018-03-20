@@ -40,7 +40,6 @@ public class Xml2Html {
 		}
 		String html = writeHtml(doc);
 		System.out.println(html);
-		//writeXml(doc, file);
 		return html;
 		
 	}

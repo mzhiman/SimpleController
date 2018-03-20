@@ -40,7 +40,6 @@ public class ActoinProxy implements InvocationHandler {
 		return result;
 	}
 
-	// *****测试动态代理*****
 	private void preAction() {
 		if (element != null && className != null) {
 			String perDoMethod = XmlParser.getAttributeValue(element, "predo");
@@ -51,24 +50,17 @@ public class ActoinProxy implements InvocationHandler {
 				e.printStackTrace();
 			}
 		}
-		//System.out.println("preAction 被执行");
 	}
 
 	private void afterAction() {
 		if (element != null && className != null) {
 			String afterDoMethod = XmlParser.getAttributeValue(element, "afterdo");
 			try {
-				//测试 start
-				//Thread.sleep(1000);
-				//测试 end
 				ClassReflector.executeMethod(className, afterDoMethod);
 			} catch (Exception e) {
 				System.out.println("ActoinProxy类出错");
 				e.printStackTrace();
 			}
 		}
-		//System.out.println("afterAction 被执行");
 	}
-	// *****测试动态代理*****
-
 }
