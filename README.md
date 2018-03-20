@@ -11,3 +11,13 @@
 4、利用对象关系映射简化数据持久化工作，使用O/R maping后，无需再处理JDBC连接数据库以及编写sql语句等任务。SimpleController构造合适的类（数据结构）来存储从or_mapping.xml中解析得到的配置信息。
 
 5、利用java.beans包中提供了内省机制，实现了依赖注入。对象不再用显示的new来创建，而是采用读取di.xml，然后采用依赖注入的方式
+## 二、使用步骤
+1、导入SimpleController.jar到项目中
+
+2、导入依赖的Jar
+
+3、编写Controller.xml（必须）
+
+4、编写or_mapping.xml和di.xml(如果不需要，可省略这两个文件)
+
+5、可以根据已有的xsl规则编写xml视图（可选）
